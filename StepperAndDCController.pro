@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+CONFIG += c++11
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = StepperAndDCController
@@ -17,13 +17,16 @@ SOURCES += main.cpp\
     steppercontrolwidget.cpp \
     steppersettingsdialog.cpp \
     steppersettingswidget.cpp \
-    dcmotorcontrolwidget.cpp
+    dcmotorcontrolwidget.cpp \
+    stepperwidgetcontroller.cpp
 
 HEADERS  += mainwindow.h \
     steppercontrolwidget.h \
     steppersettingsdialog.h \
     steppersettingswidget.h \
-    dcmotorcontrolwidget.h
+    dcmotorcontrolwidget.h \
+    controlwidgetabstract.h \
+    stepperwidgetcontroller.h
 
 FORMS    += mainwindow.ui \
     steppercontrolwidget.ui \

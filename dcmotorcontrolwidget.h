@@ -15,6 +15,19 @@ public:
     explicit DCMotorControlWidget(QWidget *parent = 0);
     ~DCMotorControlWidget();
 
+    void setSliderEnabled(bool enable);
+    double getFeedback() const;
+    int getSliderValue() const;
+
+signals:
+    void dcMotorUpdated(int value);
+
+public slots:
+    void setFeedback(double feedbackValue);
+
+private slots:
+    void on_horizontalSliderDCPowerControl_actionTriggered(int action);
+
 private:
     Ui::DCMotorControlWidget *ui;
 };
