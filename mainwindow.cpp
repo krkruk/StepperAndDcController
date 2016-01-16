@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,17 +9,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     stepperSettingsDialog = new StepperSettingsDialog(this);
     stepper1 = new StepperControlWidget(this);
-    dc1 = new DCMotorControlWidget(this);
+    dcMotorController = new DCMotorWidgetController(
+                ui->tabWidgetDCMotorSelect, this);
 
     ui->tabWidgetStepperSelect->addTab(stepper1, "Stepper1");
-    ui->tabWidgetDCMotorSelect->addTab(dc1, "Motor 1");
+    dcMotorController->addTab("Motor 1");
+    dcMotorController->addTab("Motor 2");
+    dcMotorController->setSlidersEnabled(true);
 
     connect(ui->actionStepper, SIGNAL(triggered(bool)), stepperSettingsDialog, SLOT(show()));
 }
 
 MainWindow::~MainWindow()
 {
-    delete dc1;
+    delete dcMotorController;
     delete stepper1;
     delete stepperSettingsDialog;
     delete ui;

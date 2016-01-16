@@ -12,12 +12,13 @@ class DCMotorControlWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit DCMotorControlWidget(QWidget *parent = 0);
+    explicit DCMotorControlWidget(unsigned int id, QWidget *parent = 0);
     ~DCMotorControlWidget();
 
     void setSliderEnabled(bool enable);
     double getFeedback() const;
     int getSliderValue() const;
+    unsigned int getId() const;
 
 signals:
     void dcMotorUpdated(int value);
@@ -30,6 +31,7 @@ private slots:
 
 private:
     Ui::DCMotorControlWidget *ui;
+    unsigned int id {0};
 };
 
 #endif // DCMOTORCONTROLWIDGET_H

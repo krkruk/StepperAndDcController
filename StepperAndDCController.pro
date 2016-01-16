@@ -18,15 +18,20 @@ SOURCES += main.cpp\
     steppersettingsdialog.cpp \
     steppersettingswidget.cpp \
     dcmotorcontrolwidget.cpp \
-    stepperwidgetcontroller.cpp
+    stepperwidgetcontroller.cpp \
+    dcmotorwidgetcontroller.cpp \
+    dcmotor.cpp \
+    steppermotor.cpp
 
 HEADERS  += mainwindow.h \
     steppercontrolwidget.h \
     steppersettingsdialog.h \
     steppersettingswidget.h \
     dcmotorcontrolwidget.h \
-    controlwidgetabstract.h \
-    stepperwidgetcontroller.h
+    stepperwidgetcontroller.h \
+    dcmotorwidgetcontroller.h \
+    dcmotor.h \
+    steppermotor.h
 
 FORMS    += mainwindow.ui \
     steppercontrolwidget.ui \

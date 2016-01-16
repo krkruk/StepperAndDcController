@@ -1,15 +1,16 @@
 #include "dcmotorcontrolwidget.h"
 #include "ui_dcmotorcontrolwidget.h"
 
-DCMotorControlWidget::DCMotorControlWidget(QWidget *parent) :
+DCMotorControlWidget::DCMotorControlWidget(unsigned int id, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DCMotorControlWidget)
+    ui(new Ui::DCMotorControlWidget), id(id)
 {
     ui->setupUi(this);
 
     ui->lineEditDCMotorFeedbackValue->setReadOnly(true);
     ui->lineEditDCMotorSliderValue->setReadOnly(true);
     ui->horizontalSliderDCPowerControl->setEnabled(false);
+    ui->pushButtonEmergencyStop->setEnabled(false);
 }
 
 DCMotorControlWidget::~DCMotorControlWidget()
@@ -20,6 +21,7 @@ DCMotorControlWidget::~DCMotorControlWidget()
 void DCMotorControlWidget::setSliderEnabled(bool enable)
 {
     ui->horizontalSliderDCPowerControl->setEnabled(enable);
+    ui->pushButtonEmergencyStop->setEnabled(enable);
     if(enable)
     {
         int middle = (ui->horizontalSliderDCPowerControl->minimum()
@@ -36,6 +38,11 @@ double DCMotorControlWidget::getFeedback() const
 int DCMotorControlWidget::getSliderValue() const
 {
     return ui->horizontalSliderDCPowerControl->value();
+}
+
+unsigned int DCMotorControlWidget::getId() const
+{
+    return id;
 }
 
 void DCMotorControlWidget::setFeedback(double feedbackValue)
