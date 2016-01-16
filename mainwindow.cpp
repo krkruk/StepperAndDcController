@@ -7,24 +7,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    stepperSettingsDialog = new StepperSettingsDialog(this);
-    stepper1 = new StepperControlWidget(this);
+
     dcMotorController = new DCMotorWidgetController(
                 ui->tabWidgetDCMotorSelect, this);
-
-    ui->tabWidgetStepperSelect->addTab(stepper1, "Stepper1");
-    dcMotorController->addTab("Motor 1");
-    dcMotorController->addTab("Motor 2");
+    dcMotorController->startInternalEnumerationAt(1);
+    dcMotorController->addTab(Consts::DCMOTOR1_LABEL);
+    dcMotorController->addTab(Consts::DCMOTOR2_LABEL);
     dcMotorController->setSlidersEnabled(true);
 
-    connect(ui->actionStepper, SIGNAL(triggered(bool)), stepperSettingsDialog, SLOT(show()));
+    stepperController = new StepperWidgetController(
+                ui->tabWidgetStepperSelect, this);
+    stepperController->startInternalEnumerationAt(1);
+    stepperController->addTab(Consts::STEPPER1_LABEL);
+    stepperController->addTab(Consts::STEPPER2_LABEL);
+    stepperController->setSlidersEnabled(true);
+
+    stepperSettingsDialog = stepperController->createSettingsDialog();
+
+    connect(ui->actionStepper, SIGNAL(triggered(bool)), stepperSettingsDialog.get(), SLOT(show()));
 }
 
 MainWindow::~MainWindow()
 {
+    delete stepperController;
     delete dcMotorController;
-    delete stepper1;
-    delete stepperSettingsDialog;
     delete ui;
 }
 

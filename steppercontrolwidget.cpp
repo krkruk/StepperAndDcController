@@ -1,9 +1,9 @@
 #include "steppercontrolwidget.h"
 #include "ui_steppercontrolwidget.h"
 
-StepperControlWidget::StepperControlWidget(QWidget *parent) :
+StepperControlWidget::StepperControlWidget(unsigned int id, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::StepperControlWidget)
+    ui(new Ui::StepperControlWidget), id(id)
 {
     ui->setupUi(this);
     ui->lineEditStepperFeedbackInDeg->setReadOnly(true);
@@ -34,6 +34,11 @@ double StepperControlWidget::getFeedback() const
 int StepperControlWidget::getSliderValue() const
 {
     return ui->horizontalSliderStepperPositionInDeg->value();
+}
+
+unsigned int StepperControlWidget::getId() const
+{
+    return id;
 }
 
 void StepperControlWidget::setFeedback(double feedbackValue)

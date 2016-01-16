@@ -1,6 +1,13 @@
 #include "dcmotorcontrolwidget.h"
 #include "ui_dcmotorcontrolwidget.h"
 
+double DCMotorControlWidget::toPercent(double value)
+{
+    const auto max = ui->horizontalSliderDCPowerControl->maximum();
+    double percent = 100 * value / max;
+    return percent;
+}
+
 DCMotorControlWidget::DCMotorControlWidget(unsigned int id, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DCMotorControlWidget), id(id)
@@ -46,15 +53,17 @@ unsigned int DCMotorControlWidget::getId() const
 }
 
 void DCMotorControlWidget::setFeedback(double feedbackValue)
-{
-    ui->lineEditDCMotorFeedbackValue->setText(QString::number(feedbackValue));
+{    
+    ui->lineEditDCMotorFeedbackValue->setText(QString::number(
+                                                  toPercent(feedbackValue)));
 }
 
 void DCMotorControlWidget::on_horizontalSliderDCPowerControl_actionTriggered(int action)
 {
     auto sliderValue = ui->horizontalSliderDCPowerControl->value();
 
-    ui->lineEditDCMotorSliderValue->setText(QString::number(sliderValue));
+    ui->lineEditDCMotorSliderValue->setText(QString::number(
+                                                toPercent(sliderValue)));
     emit dcMotorUpdated(sliderValue);
     Q_UNUSED(action)
 }

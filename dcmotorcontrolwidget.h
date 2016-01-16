@@ -11,6 +11,7 @@ class DCMotorControlWidget : public QWidget
 {
     Q_OBJECT
 
+    double toPercent(double value);
 public:
     explicit DCMotorControlWidget(unsigned int id, QWidget *parent = 0);
     ~DCMotorControlWidget();

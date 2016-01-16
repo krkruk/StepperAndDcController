@@ -12,12 +12,13 @@ class StepperControlWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit StepperControlWidget(QWidget *parent = 0);
+    explicit StepperControlWidget(unsigned int id, QWidget *parent = 0);
     ~StepperControlWidget();
 
     void setSliderEnabled(bool enable);
     double getFeedback() const;
     int getSliderValue() const;
+    unsigned int getId() const;
 
 signals:
     void stepperUpdated(int value);
@@ -30,6 +31,7 @@ private slots:
 
 private:
     Ui::StepperControlWidget *ui;
+    unsigned int id {0};
 };
 
 #endif // STEPPERCONTROLWIDGET_H

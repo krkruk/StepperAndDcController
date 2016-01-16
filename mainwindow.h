@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include <QTabWidget>
 
+#include "consts.h"
 #include "steppercontrolwidget.h"
 #include "steppersettingsdialog.h"
 #include "dcmotorcontrolwidget.h"
 
 #include "dcmotorwidgetcontroller.h"
+#include "stepperwidgetcontroller.h"
 /*
      * s1 - stepper 1, position in steps
      * s2 - stepper 2, position in steps
@@ -41,11 +43,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    StepperSettingsDialog *stepperSettingsDialog;
-
-    StepperControlWidget *stepper1;
+    std::shared_ptr<StepperSettingsDialog> stepperSettingsDialog;
 
     DCMotorWidgetController *dcMotorController;
+    StepperWidgetController *stepperController;
 };
 
 #endif // MAINWINDOW_H

@@ -31,7 +31,8 @@ HEADERS  += mainwindow.h \
     stepperwidgetcontroller.h \
     dcmotorwidgetcontroller.h \
     dcmotor.h \
-    steppermotor.h
+    steppermotor.h \
+    consts.h
 
 FORMS    += mainwindow.ui \
     steppercontrolwidget.ui \
