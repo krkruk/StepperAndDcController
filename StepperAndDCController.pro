@@ -14,28 +14,28 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    steppercontrolwidget.cpp \
-    steppersettingsdialog.cpp \
-    steppersettingswidget.cpp \
-    dcmotorcontrolwidget.cpp \
-    stepperwidgetcontroller.cpp \
-    dcmotorwidgetcontroller.cpp \
-    dcmotor.cpp \
-    steppermotor.cpp
+    StepperMotor/steppercontrolwidget.cpp \
+    StepperMotor/steppersettingsdialog.cpp \
+    StepperMotor/steppersettingswidget.cpp \
+    DCMotor/dcmotorcontrolwidget.cpp \
+    StepperMotor/stepperwidgetcontroller.cpp \
+    DCMotor/dcmotorwidgetcontroller.cpp \
+    DCMotor/dcmotor.cpp \
+    StepperMotor/steppermotor.cpp
 
 HEADERS  += mainwindow.h \
-    steppercontrolwidget.h \
-    steppersettingsdialog.h \
-    steppersettingswidget.h \
-    dcmotorcontrolwidget.h \
-    stepperwidgetcontroller.h \
-    dcmotorwidgetcontroller.h \
-    dcmotor.h \
-    steppermotor.h \
+    StepperMotor/steppercontrolwidget.h \
+    StepperMotor/steppersettingsdialog.h \
+    StepperMotor/steppersettingswidget.h \
+    DCMotor/dcmotorcontrolwidget.h \
+    StepperMotor/stepperwidgetcontroller.h \
+    DCMotor/dcmotorwidgetcontroller.h \
+    DCMotor/dcmotor.h \
+    StepperMotor/steppermotor.h \
     consts.h
 
 FORMS    += mainwindow.ui \
-    steppercontrolwidget.ui \
-    steppersettingsdialog.ui \
-    steppersettingswidget.ui \
-    dcmotorcontrolwidget.ui
+    StepperMotor/steppercontrolwidget.ui \
+    StepperMotor/steppersettingsdialog.ui \
+    StepperMotor/steppersettingswidget.ui \
+    DCMotor/dcmotorcontrolwidget.ui

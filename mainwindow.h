@@ -5,12 +5,12 @@
 #include <QTabWidget>
 
 #include "consts.h"
-#include "steppercontrolwidget.h"
-#include "steppersettingsdialog.h"
-#include "dcmotorcontrolwidget.h"
+#include "StepperMotor/steppercontrolwidget.h"
+#include "StepperMotor/steppersettingsdialog.h"
+#include "DCMotor/dcmotorcontrolwidget.h"
 
-#include "dcmotorwidgetcontroller.h"
-#include "stepperwidgetcontroller.h"
+#include "DCMotor/dcmotorwidgetcontroller.h"
+#include "StepperMotor/stepperwidgetcontroller.h"
 /*
      * s1 - stepper 1, position in steps
      * s2 - stepper 2, position in steps

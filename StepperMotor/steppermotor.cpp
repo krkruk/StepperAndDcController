@@ -122,8 +122,11 @@ double StepperMotor::getAngleToStepDeg() const
 
 void StepperMotor::setAngleToStepDeg(double angleToStep)
 {
-    angleToStepDeg = angleToStep;
-    updateStepsPerRevolution();
+    if(angleToStep > 0)
+    {
+        angleToStepDeg = angleToStep;
+        updateStepsPerRevolution();
+    }
 }
 
 double StepperMotor::getGearRatio() const
@@ -133,8 +136,11 @@ double StepperMotor::getGearRatio() const
 
 void StepperMotor::setGearRatio(double gear)
 {
-    gearRatio = gear;
-    updateStepsPerRevolution();
+    if(gear > 0)
+    {
+        gearRatio = gear;
+        updateStepsPerRevolution();
+    }
 }
 
 QString StepperMotor::getPositionInStepsKey() const
