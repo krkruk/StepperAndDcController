@@ -36,7 +36,7 @@ public:
     QJsonObject getDirectionJson();
     QJsonObject getJson();
 
-    void parseJson(const QString &jsonString);
+    void parseJson(const QByteArray &jsonArray);
     unsigned short getPwmFeedback() const;
     unsigned short getDirnFeedback() const;
 };

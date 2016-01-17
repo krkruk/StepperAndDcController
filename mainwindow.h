@@ -41,6 +41,7 @@ class MainWindow : public QMainWindow
     void updateUartDevices();
     void connects();
     void openSerialConnection();
+    void setStatusBarMsg(int time, const QString &str);
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -50,7 +51,7 @@ private slots:
     void enableSerialWidgets();
     void disableSerialWidgets();
     void setSerialMsgToSend(const QJsonObject &json);
-    void readSerialLine(const QString &line);
+    void readSerialLine(const QByteArray &line);
     void on_pushButtonUartReload_clicked();
 
     void on_pushButtonUartConnect_clicked();

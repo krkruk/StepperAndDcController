@@ -287,9 +287,9 @@ double StepperMotor::getPositionInDegFeedback() const
     return positionInDegFeedback;
 }
 
-void StepperMotor::parseJson(const QString &json)
+void StepperMotor::parseJson(const QByteArray &jsonArray)
 {
-    auto jsonDocument = QJsonDocument::fromJson(json.toLatin1());
+    auto jsonDocument = QJsonDocument::fromJson(jsonArray);
     auto jsonObj = jsonDocument.object();
 
     positionInStepsFeedback =

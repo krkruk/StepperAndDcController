@@ -33,7 +33,7 @@ signals:
     void stepperJsonUpdate(const QJsonObject &json);
 
 public slots:
-    void stepperUpdateFeedback(const QString &json);
+    void stepperUpdateFeedback(const QByteArray &json);
 
 private slots:
     void onStepperUpdated(int stepperValue);

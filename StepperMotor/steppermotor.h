@@ -83,7 +83,7 @@ public:
     int getTimeIntervalFeedbackMs() const;
     double getPositionInDegFeedback() const;
 
-    void parseJson(const QString &json);
+    void parseJson(const QByteArray &jsonArray);
 
 private:
     void loadSettings();

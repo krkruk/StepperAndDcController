@@ -58,7 +58,6 @@ void SerialPort::close()
     {
         timer->stop();
         serial->close();
-        qDebug() <<"Serial Closed";
         emit connectionClosed();
     }
 }
@@ -78,7 +77,8 @@ void SerialPort::lineReceived()
     if(serial->canReadLine())
     {
         auto line = serial->readLine();
-        emit readLine(QString(line));
+        line.remove(0,1);
+        emit readLine(line);
     }
 }
 
@@ -98,7 +98,6 @@ void SerialPort::onTimerTimeout()
         auto jsonDocument = QJsonDocument(jsonToSend);
         auto jsonData = jsonDocument.toJson(QJsonDocument::Compact);
         serial->write(jsonData + "\r\n");
-        qDebug() << jsonData;
         jsonToSend = QJsonObject();
     }
 }

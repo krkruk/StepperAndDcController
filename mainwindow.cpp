@@ -14,7 +14,7 @@ void MainWindow::connects()
 {
     connect(ui->actionStepper, SIGNAL(triggered(bool)), stepperSettingsDialog.get(), SLOT(show()));
     connect(serial, SIGNAL(connectionClosed()), this, SLOT(enableSerialWidgets()));
-    connect(serial, SIGNAL(readLine(QString)), this, SLOT(readSerialLine(QString)));
+    connect(serial, SIGNAL(readLine(QByteArray)), this, SLOT(readSerialLine(QByteArray)));
 
     connect(dcMotorController, SIGNAL(dcMotorJsonUpdate(QJsonObject)),
             this, SLOT(setSerialMsgToSend(QJsonObject)));
@@ -29,8 +29,16 @@ void MainWindow::openSerialConnection()
     {
         serial->setPortName(portName);
         if(serial->open())
+        {
             disableSerialWidgets();
+            setStatusBarMsg(5000, tr("Connection established..."));
+        }
     }
+}
+
+void MainWindow::setStatusBarMsg(int time, const QString &str)
+{
+    ui->statusBar->showMessage(str, time);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -72,6 +80,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::enableSerialWidgets()
 {
+    setStatusBarMsg(5000, tr("Connection closed..."));
     dcMotorController->reset();
     stepperController->reset();
     dcMotorController->setSlidersEnabled(false);
@@ -95,7 +104,7 @@ void MainWindow::setSerialMsgToSend(const QJsonObject &json)
     serial->setSerialMsgToSend(json);
 }
 
-void MainWindow::readSerialLine(const QString &line)
+void MainWindow::readSerialLine(const QByteArray &line)
 {
     dcMotorController->dcMotorUpdateFeedback(line);
     stepperController->stepperUpdateFeedback(line);

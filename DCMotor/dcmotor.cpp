@@ -92,9 +92,9 @@ QJsonObject DCMotor::getJson()
                        });
 }
 
-void DCMotor::parseJson(const QString &jsonString)
+void DCMotor::parseJson(const QByteArray &jsonArray)
 {
-    auto json = QJsonDocument::fromJson(jsonString.toLatin1());
+    auto json = QJsonDocument::fromJson(jsonArray);
     auto jsonObj = json.object();
 
     pwmFeedback = jsonObj.value(pwmKey).toInt(pwmFeedback);

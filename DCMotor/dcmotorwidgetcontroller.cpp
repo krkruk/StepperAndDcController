@@ -65,7 +65,7 @@ QJsonObject DCMotorWidgetController::getLastJson()
     return json;
 }
 
-void DCMotorWidgetController::dcMotorUpdateFeedback(const QString &json)
+void DCMotorWidgetController::dcMotorUpdateFeedback(const QByteArray &json)
 {
     for(auto &state : dcMotorsStates)
         state.parseJson(json);

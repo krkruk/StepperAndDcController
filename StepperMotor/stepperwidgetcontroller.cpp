@@ -81,7 +81,7 @@ QJsonObject StepperWidgetController::getLastJson()
     return json;
 }
 
-void StepperWidgetController::stepperUpdateFeedback(const QString &json)
+void StepperWidgetController::stepperUpdateFeedback(const QByteArray &json)
 {
     for(auto &state : stepperMotorsStates)
         state.parseJson(json);

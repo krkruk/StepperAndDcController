@@ -24,7 +24,7 @@ public:
     void setSerialMsgToSend(const QJsonObject &msg);
 
 signals:
-    void readLine(const QString &line);
+    void readLine(const QByteArray &line);
     void connectionClosed();
 
 public slots:

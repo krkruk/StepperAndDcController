@@ -30,7 +30,7 @@ signals:
     void dcMotorJsonUpdate(const QJsonObject &json);
 
 public slots:
-    void dcMotorUpdateFeedback(const QString &json);
+    void dcMotorUpdateFeedback(const QByteArray &json);
 
 private slots:
     void onDcMotorUpdated(int dcValue);
