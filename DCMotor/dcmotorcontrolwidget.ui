@@ -89,7 +89,10 @@
       <item row="2" column="0" colspan="3">
        <widget class="QPushButton" name="pushButtonEmergencyStop">
         <property name="text">
-         <string>Emergency &amp;stop</string>
+         <string>&amp;Emergency stop</string>
+        </property>
+        <property name="shortcut">
+         <string>E</string>
         </property>
        </widget>
       </item>

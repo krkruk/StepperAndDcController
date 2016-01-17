@@ -41,6 +41,13 @@ unsigned int StepperControlWidget::getId() const
     return id;
 }
 
+void StepperControlWidget::reset()
+{
+    ui->horizontalSliderStepperPositionInDeg->setValue(0);
+    ui->lineEditStepperFeedbackInDeg->setText("0");
+    ui->lineEditStepperSliderPositionInDeg->setText("0");
+}
+
 void StepperControlWidget::setFeedback(double feedbackValue)
 {
     ui->lineEditStepperFeedbackInDeg->setText(QString::number(feedbackValue));

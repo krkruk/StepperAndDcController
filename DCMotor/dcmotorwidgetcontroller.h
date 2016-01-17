@@ -18,14 +18,19 @@ public:
 
     void addTab(const QString &label);
     void setSlidersEnabled(bool enable);
+    void reset();
     bool startInternalEnumerationAt(unsigned int startAt);
     unsigned int getStartInternalEnumerationAt() const;
     QList<DCMotor> getDcMotorsStates() const;
 
+    int getLastElemUpdatedIndex() const;
+    QJsonObject getLastJson();
 signals:
     void dcMotorUpdate(int index);
+    void dcMotorJsonUpdate(const QJsonObject &json);
 
 public slots:
+    void dcMotorUpdateFeedback(const QString &json);
 
 private slots:
     void onDcMotorUpdated(int dcValue);
@@ -35,7 +40,7 @@ private:
     QTabWidget *tabWidget;
     QList<std::shared_ptr<DCMotorControlWidget>> tabObjects;
     QList<DCMotor> dcMotorsStates;
-
+    int lastElemUpdatedIndex{0};
 };
 
 #endif // DCMOTORWIDGETCONTROLLER_H

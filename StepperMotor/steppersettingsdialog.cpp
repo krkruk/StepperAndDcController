@@ -61,6 +61,6 @@ void StepperSettingsDialog::on_buttonBox_accepted()
 
 void StepperSettingsDialog::on_buttonBox_rejected()
 {
-    QMessageBox::information(this, tr("Stepper settings"),
+    QMessageBox::information(qobject_cast<QWidget *> (parent()), tr("Stepper settings"),
                              tr("No settings have been changed."));
 }

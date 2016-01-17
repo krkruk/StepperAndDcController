@@ -19,6 +19,7 @@ public:
     double getFeedback() const;
     int getSliderValue() const;
     unsigned int getId() const;
+    void reset();
 
 signals:
     void stepperUpdated(int value);

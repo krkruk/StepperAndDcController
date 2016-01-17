@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTabWidget>
+#include <QSerialPortInfo>
 
 #include "consts.h"
 #include "StepperMotor/steppercontrolwidget.h"
@@ -11,6 +12,8 @@
 
 #include "DCMotor/dcmotorwidgetcontroller.h"
 #include "StepperMotor/stepperwidgetcontroller.h"
+#include "serialport.h"
+
 /*
      * s1 - stepper 1, position in steps
      * s2 - stepper 2, position in steps
@@ -35,11 +38,28 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    void updateUartDevices();
+    void connects();
+    void openSerialConnection();
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
+    void enableSerialWidgets();
+    void disableSerialWidgets();
+    void setSerialMsgToSend(const QJsonObject &json);
+    void readSerialLine(const QString &line);
+    void on_pushButtonUartReload_clicked();
+
+    void on_pushButtonUartConnect_clicked();
+
+    void on_action_Exit_triggered();
+
+    void on_action_Author_triggered();
+
+    void on_action_About_Qt_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -47,6 +67,8 @@ private:
 
     DCMotorWidgetController *dcMotorController;
     StepperWidgetController *stepperController;
+
+    SerialPort *serial;
 };
 
 #endif // MAINWINDOW_H

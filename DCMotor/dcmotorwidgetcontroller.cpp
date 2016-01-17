@@ -28,6 +28,12 @@ void DCMotorWidgetController::setSlidersEnabled(bool enable)
         tab->setSliderEnabled(enable);
 }
 
+void DCMotorWidgetController::reset()
+{
+    for(auto &tab : tabObjects)
+        tab->reset();
+}
+
 bool DCMotorWidgetController::startInternalEnumerationAt(unsigned int startAt)
 {
     if(tabObjects.length() == 0)
@@ -48,14 +54,38 @@ QList<DCMotor> DCMotorWidgetController::getDcMotorsStates() const
     return dcMotorsStates;
 }
 
+int DCMotorWidgetController::getLastElemUpdatedIndex() const
+{
+    return lastElemUpdatedIndex;
+}
+
+QJsonObject DCMotorWidgetController::getLastJson()
+{
+    auto json = dcMotorsStates[lastElemUpdatedIndex].getJson();
+    return json;
+}
+
+void DCMotorWidgetController::dcMotorUpdateFeedback(const QString &json)
+{
+    for(auto &state : dcMotorsStates)
+        state.parseJson(json);
+
+    int index = 0;
+    for(auto &tab : tabObjects)
+    {
+        auto pwmFeedback = dcMotorsStates.at(index).getPwmFeedback();
+        pwmFeedback = pwmFeedback > 0 ? pwmFeedback : -1*pwmFeedback;
+        tab->setFeedback(pwmFeedback);
+        ++index;
+    }
+}
+
 void DCMotorWidgetController::onDcMotorUpdated(int dcValue)
 {
     auto dcSlider = qobject_cast<DCMotorControlWidget *>(sender());
-    auto dcID = dcSlider->getId() - startAtValue;
-    dcMotorsStates[dcID].setPwm(dcValue);
-    qDebug() << "DC value: " << dcMotorsStates.at(dcID).getPwm()
-             << "Direction: "<< dcMotorsStates.at(dcID).getDirection()
-             << "ID: " <<dcSlider->getId();
+    lastElemUpdatedIndex = dcSlider->getId() - startAtValue;
+    dcMotorsStates[lastElemUpdatedIndex].setPwm(dcValue);
 
-    emit dcMotorUpdate(dcID);
+    emit dcMotorUpdate(lastElemUpdatedIndex);
+    emit dcMotorJsonUpdate(dcMotorsStates[lastElemUpdatedIndex].getJson());
 }

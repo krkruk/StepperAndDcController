@@ -29,6 +29,12 @@ void StepperWidgetController::setSlidersEnabled(bool enable)
         tab->setSliderEnabled(enable);
 }
 
+void StepperWidgetController::reset()
+{
+    for(auto &tab : tabObjects)
+        tab->reset();
+}
+
 bool StepperWidgetController::startInternalEnumerationAt(unsigned int startAt)
 {
     if(tabObjects.length() == 0)
@@ -64,14 +70,38 @@ std::shared_ptr<StepperSettingsDialog> StepperWidgetController::createSettingsDi
     return stepperSettingsDialog;
 }
 
+int StepperWidgetController::getLastElemUpdatedIndex() const
+{
+    return lastElemUpdatedIndex;
+}
+
+QJsonObject StepperWidgetController::getLastJson()
+{
+    auto json = stepperMotorsStates[lastElemUpdatedIndex].getJson();
+    return json;
+}
+
+void StepperWidgetController::stepperUpdateFeedback(const QString &json)
+{
+    for(auto &state : stepperMotorsStates)
+        state.parseJson(json);
+
+    int index = 0;
+    for(auto &tab : tabObjects)
+    {
+        auto stepperPosInDeg =
+                stepperMotorsStates.at(index).getPositionInDegFeedback();
+        tab->setFeedback(stepperPosInDeg);
+        ++index;
+    }
+}
+
 void StepperWidgetController::onStepperUpdated(int stepperValue)
 {
     auto *stepperSlider = qobject_cast<StepperControlWidget *>(sender());
-    auto stepperID = stepperSlider->getId() - startAtValue;
-    stepperMotorsStates[stepperID].setPositionInDeg(stepperValue);
-    qDebug() << "Stepper #"<<stepperSlider->getId()
-             << "Deg:"<<stepperMotorsStates[stepperID].getPositionInDeg()
-             << "Steps:"<<stepperMotorsStates[stepperID].getPositionInSteps();
+    lastElemUpdatedIndex = stepperSlider->getId() - startAtValue;
+    stepperMotorsStates[lastElemUpdatedIndex].setPositionInDeg(stepperValue);
 
-    emit stepperUpdate(stepperID);
+    emit stepperUpdate(lastElemUpdatedIndex);
+    emit stepperJsonUpdate(stepperMotorsStates[lastElemUpdatedIndex].getJson());
 }

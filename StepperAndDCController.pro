@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui serialport
 CONFIG += c++11
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     StepperMotor/stepperwidgetcontroller.cpp \
     DCMotor/dcmotorwidgetcontroller.cpp \
     DCMotor/dcmotor.cpp \
-    StepperMotor/steppermotor.cpp
+    StepperMotor/steppermotor.cpp \
+    serialport.cpp
 
 HEADERS  += mainwindow.h \
     StepperMotor/steppercontrolwidget.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     DCMotor/dcmotorwidgetcontroller.h \
     DCMotor/dcmotor.h \
     StepperMotor/steppermotor.h \
-    consts.h
+    consts.h \
+    serialport.h
 
 FORMS    += mainwindow.ui \
     StepperMotor/steppercontrolwidget.ui \

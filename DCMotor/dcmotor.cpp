@@ -2,6 +2,7 @@
 #include <memory>
 #include <cmath>
 
+
 DCMotor::DCMotor(int index)
     : pwmKey(QString("p%1").arg(index)),
       directionKey(QString("d%1").arg(index))
@@ -63,4 +64,49 @@ void DCMotor::setDirection(DCMotor::DIRECTION dirn)
 unsigned short DCMotor::getDirection() const
 {
     return dirn;
+}
+
+QJsonObject DCMotor::getPwmJson()
+{
+    QJsonValue jsonPWM(pwmValue);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(pwmKey, jsonPWM)
+                       });
+}
+
+QJsonObject DCMotor::getDirectionJson()
+{
+    QJsonValue jsonDir(dirn);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(directionKey, jsonDir)
+                       });
+}
+
+QJsonObject DCMotor::getJson()
+{
+    QJsonValue jsonPWM(pwmValue);
+    QJsonValue jsonDir(dirn);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(pwmKey, jsonPWM),
+                           QPair<QString, QJsonValue>(directionKey, jsonDir)
+                       });
+}
+
+void DCMotor::parseJson(const QString &jsonString)
+{
+    auto json = QJsonDocument::fromJson(jsonString.toLatin1());
+    auto jsonObj = json.object();
+
+    pwmFeedback = jsonObj.value(pwmKey).toInt(pwmFeedback);
+    dirnFeedback = jsonObj.value(directionKey).toInt(pwmFeedback);
+}
+
+unsigned short DCMotor::getPwmFeedback() const
+{
+    return pwmFeedback;
+}
+
+unsigned short DCMotor::getDirnFeedback() const
+{
+    return dirnFeedback;
 }

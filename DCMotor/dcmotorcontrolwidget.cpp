@@ -52,6 +52,13 @@ unsigned int DCMotorControlWidget::getId() const
     return id;
 }
 
+void DCMotorControlWidget::reset()
+{
+    ui->horizontalSliderDCPowerControl->setValue(0);
+    ui->lineEditDCMotorFeedbackValue->setText("0");
+    ui->lineEditDCMotorSliderValue->setText("0");
+}
+
 void DCMotorControlWidget::setFeedback(double feedbackValue)
 {    
     ui->lineEditDCMotorFeedbackValue->setText(QString::number(
@@ -66,4 +73,13 @@ void DCMotorControlWidget::on_horizontalSliderDCPowerControl_actionTriggered(int
                                                 toPercent(sliderValue)));
     emit dcMotorUpdated(sliderValue);
     Q_UNUSED(action)
+}
+
+void DCMotorControlWidget::on_pushButtonEmergencyStop_clicked()
+{
+    constexpr int NULL_VALUE {0};
+    ui->lineEditDCMotorSliderValue->setText(QString::number(
+                                                toPercent(NULL_VALUE)));
+    ui->horizontalSliderDCPowerControl->setValue(NULL_VALUE);
+    emit dcMotorUpdated(NULL_VALUE);
 }

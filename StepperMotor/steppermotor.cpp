@@ -2,6 +2,8 @@
 #include "consts.h"
 #include <QPair>
 #include <QDebug>
+
+
 StepperMotor::StepperMotor(int index)
     : positionInStepsKey(QString("s%1").arg(index)),
       resetPositionKey(QString("sr%1").arg(index)),
@@ -60,7 +62,7 @@ StepperMotor::~StepperMotor()
 void StepperMotor::setPositionInSteps(int steps)
 {
     positionInStepsValue = steps;
-    positionInDeg = calculateCurrentAngle();
+    positionInDeg = calculateCurrentAngle(positionInStepsValue);
 }
 
 int StepperMotor::getPositionInSteps() const
@@ -194,16 +196,110 @@ void StepperMotor::updateStepsPerRevolution()
     short multiplier = (stepperModeValue == HalfStep) ? 2 : 1;
     lowerStepLimit = - (360.0f / angleToStepDeg) * gearRatio * multiplier;
     upperStepLimit = (360.0f / angleToStepDeg) * gearRatio * multiplier;
-    qDebug() << "Lower:"<<lowerStepLimit <<"Upper:"<<upperStepLimit;
 }
 
-double StepperMotor::calculateCurrentAngle() const
+double StepperMotor::calculateCurrentAngle(int positionInSteps) const
 {
-    return 360 * positionInStepsValue / upperStepLimit;
+    return 360 * positionInSteps / upperStepLimit;
 }
 
 int StepperMotor::calculateCurrentSteps()
 {
-    qDebug() << "posInDeg:"<<positionInDeg<<"upperLimit"<<upperStepLimit;
     return positionInDeg * upperStepLimit / 360.0f;
+}
+
+QJsonObject StepperMotor::getPositionInStepsJson()
+{
+    QJsonValue jsonPosInSteps(positionInStepsValue);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(
+                           positionInStepsKey, jsonPosInSteps)
+                       });
+}
+
+QJsonObject StepperMotor::getResetPositionJson()
+{
+    QJsonValue jsonReset(resetPositionValue);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(
+                           resetPositionKey, jsonReset)
+                       });
+}
+
+QJsonObject StepperMotor::getStepperModeJson()
+{
+    QJsonValue jsonStepperMode(stepperModeValue);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(
+                           stepperModeKey, jsonStepperMode)
+                       });
+}
+
+QJsonObject StepperMotor::getTimeIntervalJson()
+{
+    QJsonValue jsonTimeInterval(timeIntervalValueMs);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(
+                           timeIntervalKey, jsonTimeInterval)
+                       });
+}
+
+QJsonObject StepperMotor::getJson()
+{
+    QJsonValue jsonPosInSteps(positionInStepsValue);
+    QJsonValue jsonReset(resetPositionValue);
+    QJsonValue jsonStepperMode(stepperModeValue);
+    QJsonValue jsonTimeInterval(timeIntervalValueMs);
+    return QJsonObject({
+                           QPair<QString, QJsonValue>(
+                           positionInStepsKey, jsonPosInSteps),
+                           QPair<QString, QJsonValue>(
+                           resetPositionKey, jsonReset),
+                           QPair<QString, QJsonValue>(
+                           stepperModeKey, jsonStepperMode),
+                           QPair<QString, QJsonValue>(
+                           timeIntervalKey, jsonTimeInterval)
+                       });
+}
+
+int StepperMotor::getPositionInStepsFeedback() const
+{
+    return positionInStepsFeedback;
+}
+
+bool StepperMotor::getResetPositionFeedback() const
+{
+    return resetPositionFeedback;
+}
+
+short StepperMotor::getStepperModeFeedback() const
+{
+    return stepperModeFeedback;
+}
+
+int StepperMotor::getTimeIntervalFeedbackMs() const
+{
+    return timeIntervalFeedbackMs;
+}
+
+double StepperMotor::getPositionInDegFeedback() const
+{
+    return positionInDegFeedback;
+}
+
+void StepperMotor::parseJson(const QString &json)
+{
+    auto jsonDocument = QJsonDocument::fromJson(json.toLatin1());
+    auto jsonObj = jsonDocument.object();
+
+    positionInStepsFeedback =
+            jsonObj.value(positionInStepsKey).toInt(positionInStepsFeedback);
+    resetPositionFeedback =
+            jsonObj.value(resetPositionKey).toInt(resetPositionFeedback);
+    stepperModeFeedback =
+            jsonObj.value(stepperModeKey).toInt(stepperModeFeedback);
+    timeIntervalFeedbackMs =
+            jsonObj.value(timeIntervalKey).toInt(timeIntervalFeedbackMs);
+
+    positionInDegFeedback = calculateCurrentAngle(positionInStepsFeedback);
 }

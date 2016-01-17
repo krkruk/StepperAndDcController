@@ -2,6 +2,9 @@
 #define DCMOTOR_H
 
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonDocument>
 
 class DCMotor
 {
@@ -10,6 +13,10 @@ class DCMotor
 
     unsigned short pwmValue {0};
     unsigned short dirn {0};
+
+    unsigned short pwmFeedback {0};
+    unsigned short dirnFeedback {0};
+
 public:
     DCMotor(int index);
     DCMotor(const DCMotor &other);
@@ -24,6 +31,14 @@ public:
 
     void setDirection(enum DIRECTION dirn);
     unsigned short getDirection() const;
+
+    QJsonObject getPwmJson();
+    QJsonObject getDirectionJson();
+    QJsonObject getJson();
+
+    void parseJson(const QString &jsonString);
+    unsigned short getPwmFeedback() const;
+    unsigned short getDirnFeedback() const;
 };
 
 #endif // DCMOTOR_H

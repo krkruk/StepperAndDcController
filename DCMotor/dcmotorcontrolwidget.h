@@ -20,7 +20,7 @@ public:
     double getFeedback() const;
     int getSliderValue() const;
     unsigned int getId() const;
-
+    void reset();
 signals:
     void dcMotorUpdated(int value);
 
@@ -29,6 +29,8 @@ public slots:
 
 private slots:
     void on_horizontalSliderDCPowerControl_actionTriggered(int action);
+
+    void on_pushButtonEmergencyStop_clicked();
 
 private:
     Ui::DCMotorControlWidget *ui;

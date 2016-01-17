@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QSettings>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonDocument>
 
 class StepperMotor
 {
@@ -12,7 +15,7 @@ class StepperMotor
     QString timeIntervalKey;
 
     int positionInStepsValue {0};
-    double positionInDeg {0};
+    double positionInDeg {0.0};
     bool resetPositionValue {false};
     short stepperModeValue {0};
     int timeIntervalValueMs {10};
@@ -22,6 +25,12 @@ class StepperMotor
 
     double lowerStepLimit {1.0};
     double upperStepLimit {1.0};
+
+    int positionInStepsFeedback {0};
+    double positionInDegFeedback {0.0};
+    bool resetPositionFeedback {false};
+    short stepperModeFeedback {0};
+    int timeIntervalFeedbackMs {10};
 
 public:
     StepperMotor(int index);
@@ -58,8 +67,24 @@ public:
     QString getTimeIntervalKey() const;
 
     void updateStepsPerRevolution();
-    double calculateCurrentAngle() const;
+    double calculateCurrentAngle(int positionInSteps) const;
     int calculateCurrentSteps();
+
+    QJsonObject getPositionInStepsJson();
+    QJsonObject getResetPositionJson();
+    QJsonObject getStepperModeJson();
+    QJsonObject getTimeIntervalJson();
+
+    QJsonObject getJson();
+
+    int getPositionInStepsFeedback() const;
+    bool getResetPositionFeedback() const;
+    short getStepperModeFeedback() const;
+    int getTimeIntervalFeedbackMs() const;
+    double getPositionInDegFeedback() const;
+
+    void parseJson(const QString &json);
+
 private:
     void loadSettings();
     void saveSettings();
