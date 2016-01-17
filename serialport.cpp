@@ -84,7 +84,7 @@ void SerialPort::lineReceived()
 
 void SerialPort::serialError(QSerialPort::SerialPortError e)
 {
-    if(e != QSerialPort::NoError)
+    if(e == QSerialPort::ResourceError)
     {
         QMessageBox::critical(qobject_cast<QWidget *> (parent()), tr("Serial Error"), serial->errorString());
         close();

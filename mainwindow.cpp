@@ -80,6 +80,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::enableSerialWidgets()
 {
+    auto uartDevices = QSerialPortInfo::availablePorts();
+    ui->comboBoxUartDeviceSelect->clear();
     setStatusBarMsg(5000, tr("Connection closed..."));
     dcMotorController->reset();
     stepperController->reset();
